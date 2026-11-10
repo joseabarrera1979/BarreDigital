@@ -17,37 +17,37 @@ const nutriFeatures = [
     number: "01",
     symbol: "◌",
     title: "Pacientes y seguimiento",
-    text: "Fichas, historial y controles para acompañar la evolución de cada persona.",
+    items: ["Fichas de pacientes.", "Historial de atención.", "Controles para acompañar la evolución de cada persona."],
   },
   {
     number: "02",
     symbol: "⌁",
     title: "Evaluación nutricional",
-    text: "Anamnesis alimentaria y evaluaciones para reunir el contexto de cada consulta.",
+    items: ["Anamnesis alimentaria.", "Evaluaciones para reunir el contexto de cada consulta."],
   },
   {
     number: "03",
     symbol: "↗",
     title: "Mediciones antropométricas",
-    text: "Registro de medidas y consulta de su evolución a lo largo del tiempo.",
+    items: ["Registro de medidas antropométricas.", "Consulta de su evolución a lo largo del tiempo."],
   },
   {
     number: "04",
     symbol: "▤",
     title: "Planes de alimentación",
-    text: "Organización de comidas y alimentos, con resumen nutricional e ideas de menú.",
+    items: ["Organización de comidas y alimentos.", "Resumen nutricional.", "Ideas de menú."],
   },
   {
     number: "05",
     symbol: "◷",
     title: "Agenda y continuidad",
-    text: "Gestión de turnos y seguimientos, con recordatorios por WhatsApp sujetos a consentimiento y configuración.",
+    items: ["Gestión de turnos y seguimientos.", "Recordatorios por WhatsApp, sujetos a consentimiento y configuración."],
   },
   {
     number: "06",
     symbol: "⌗",
     title: "Gestión profesional",
-    text: "Reportes de rendimiento y control de caja y honorarios para la práctica cotidiana.",
+    items: ["Reportes de rendimiento.", "Control de caja y honorarios para la práctica cotidiana."],
   },
 ];
 
@@ -62,11 +62,11 @@ const sectors = [
 ];
 
 const turnosCore = [
-  { title: "Organizaciones y equipo", text: "Cada organización cuenta con integrantes, perfiles de acceso y una zona horaria propia." },
-  { title: "Servicios y prestaciones", text: "Definí duración, tiempos de preparación y qué personas o recursos requiere cada servicio." },
-  { title: "Personas y recursos", text: "Administrá clientes y unidades asignables como profesionales, espacios o capacidad." },
-  { title: "Agendas y horarios", text: "Configurá horarios generales y por unidad, además de cierres para días o períodos concretos." },
-  { title: "Consulta de disponibilidad", text: "Calculá horarios posibles considerando duración, márgenes, agenda y zona horaria." },
+  { title: "Organizaciones y equipo", items: ["Integrantes y perfiles de acceso.", "Zona horaria propia para cada organización."] },
+  { title: "Servicios y prestaciones", items: ["Duración y tiempos de preparación.", "Personas o recursos requeridos por servicio."] },
+  { title: "Personas y recursos", items: ["Administración de clientes.", "Unidades asignables como profesionales, espacios o capacidad."] },
+  { title: "Agendas y horarios", items: ["Horarios generales y por unidad.", "Cierres para días o períodos concretos."] },
+  { title: "Consulta de disponibilidad", items: ["Cálculo de horarios posibles según duración y márgenes.", "Consideración de la agenda y la zona horaria."] },
 ];
 
 const transversalIdeas = [
@@ -112,12 +112,12 @@ const newProductPages: Record<NewProductId, {
       {
         title: "Cuotas, cobranzas y morosidad",
         symbol: "↗",
-        description: "Herramientas para administrar las obligaciones económicas de los socios, registrar cobranzas y mantener un seguimiento actualizado de los pagos pendientes, facilitando el control financiero de clubes e instituciones.",
+        description: "Gestión de las cuotas de socios, registro de pagos y seguimiento de saldos pendientes.",
         items: [
-          "Administración de cuotas: configuración de cuotas sociales, importes y periodicidad; asignación a socios y categorías; conceptos de cobro y obligaciones por período.",
-          "Registro de cobranzas: pagos asociados a socios y conceptos, historial, pagos parciales, saldos y períodos abonados.",
-          "Seguimiento de morosidad: cuotas vencidas, saldos adeudados, antigüedad de deudas, listados de pagos pendientes y evolución de la morosidad.",
-          "Control e información económica: resúmenes de cuotas emitidas y cobradas, deuda pendiente, indicadores y consultas por período, categoría y socio.",
+          "Configuración y asignación de cuotas.",
+          "Registro y consulta de pagos.",
+          "Control de saldos vencidos y socios morosos.",
+          "Resúmenes de cobranzas y deudas pendientes.",
         ],
       },
       { title: "Disciplinas y actividades", symbol: "✳", items: ["Administración de disciplinas.", "Categorías y divisiones.", "Organización de actividades."] },
@@ -221,7 +221,7 @@ function NutriPage() {
             <article className="nutri-feature-card" key={feature.number}>
               <div className="feature-card-top"><span>{feature.number}</span><span aria-hidden="true">{feature.symbol}</span></div>
               <h3>{feature.title}</h3>
-              <p>{feature.text}</p>
+              <ul>{feature.items.map((item) => <li key={item}>{item}</li>)}</ul>
             </article>
           ))}
         </div>
@@ -288,7 +288,7 @@ function TurnosPage() {
             <article className="turnos-core-card" key={feature.title}>
               <span className="core-index">0{index + 1} / BASE</span>
               <h3>{feature.title}</h3>
-              <p>{feature.text}</p>
+              <ul>{feature.items.map((item) => <li key={item}>{item}</li>)}</ul>
             </article>
           ))}
         </div>

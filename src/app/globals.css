@@ -204,10 +204,11 @@ a:focus-visible, summary:focus-visible {
 .feature-card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; color: #8e8f87; font-size: 9px; letter-spacing: .12em; }
 .feature-card-top span:last-child { color: var(--orange); font-size: 20px; }
 .nutri-feature-card h3, .product-feature-card h3, .turnos-core-card h3 { margin: 0 0 9px; color: var(--ink); font-size: 18px; font-weight: 500; letter-spacing: -.035em; }
-.nutri-feature-card p, .turnos-core-card p { margin: 0; color: #a0a199; font-size: 11px; line-height: 1.75; }
-.product-feature-card ul { margin: 0; padding-left: 15px; color: #a0a199; font-size: 11px; line-height: 1.65; }
+.nutri-feature-card ul, .turnos-core-card ul, .product-feature-card ul { display: grid; gap: 6px; margin: 0; padding: 0; color: #a0a199; font-size: 11px; line-height: 1.65; list-style: none; }
+.nutri-feature-card li, .turnos-core-card li, .product-feature-card li { position: relative; padding-left: 13px; }
+.nutri-feature-card li::before, .turnos-core-card li::before, .product-feature-card li::before { content: ""; width: 5px; height: 5px; position: absolute; top: .62em; left: 0; border-radius: 50%; background: var(--orange); }
 .product-feature-card > p { margin: 0 0 11px; color: #a0a199; font-size: 10px; line-height: 1.65; }
-.product-feature-card li + li { margin-top: 6px; }
+.product-feature-card li + li { margin-top: 0; }
 .product-footnote { margin: 17px 0 0; color: #85867f; font-size: 10px; line-height: 1.65; }
 .product-close { padding-block: 68px 72px; border-top: 1px solid var(--line); }
 .product-close .eyebrow { margin-bottom: 20px; }
@@ -247,10 +248,12 @@ a:focus-visible, summary:focus-visible {
 .option-panel { position: relative; padding: 25px; border: 1px solid var(--line); background: var(--card-raised); }
 .option-panel h3 { margin: 0; font-size: 21px; font-weight: 600; letter-spacing: -.04em; }
 .option-panel > p:not(.eyebrow):not(.clinical-separation) { margin: 9px 0 20px; color: var(--muted); font-size: 10px; line-height: 1.7; }
-.option-chip-list { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0; list-style: none; }
-.option-chip-list li { position: relative; padding: 8px 9px; border: 1px solid var(--line); color: var(--ink); font-size: 9px; background: var(--card); }
+.option-chip-list { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 20px; margin: 0; padding: 0; list-style: none; }
+.option-chip-list li { position: relative; padding-left: 13px; color: var(--ink); font-size: 10px; line-height: 1.5; }
+.option-chip-list li::before { content: ""; width: 5px; height: 5px; position: absolute; top: .5em; left: 0; border-radius: 50%; background: var(--orange); }
 .specialized-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
-.specialized-list li { position: relative; display: flex; flex-direction: column; gap: 5px; padding-block: 11px; border-bottom: 1px solid var(--line); }
+.specialized-list li { position: relative; display: flex; flex-direction: column; gap: 5px; padding: 11px 0 11px 13px; border-bottom: 1px solid var(--line); }
+.specialized-list li::before { content: ""; width: 5px; height: 5px; position: absolute; top: 17px; left: 0; border-radius: 50%; background: var(--orange); }
 .specialized-list strong { font-size: 10px; }
 .specialized-list span { color: var(--muted); font-size: 9px; line-height: 1.5; }
 .clinical-separation { margin: 14px 0 0; padding-left: 11px; border-left: 2px solid var(--orange); color: var(--muted); font-size: 9px; line-height: 1.65; }
@@ -402,7 +405,6 @@ a:focus-visible, summary:focus-visible {
   .sector-card,
   .turnos-core-card,
   .option-panel,
-  .option-chip-list li,
   .specialized-list li {
     z-index: 0;
     transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease, background-color .24s ease;
@@ -415,7 +417,6 @@ a:focus-visible, summary:focus-visible {
   .sector-card:hover,
   .turnos-core-card:hover,
   .option-panel:hover,
-  .option-chip-list li:hover,
   .specialized-list li:hover {
     z-index: 1;
     transform: translateY(-5px) scale(1.01);
@@ -428,7 +429,6 @@ a:focus-visible, summary:focus-visible {
   .sector-card:hover,
   .turnos-core-card:hover,
   .option-panel:hover,
-  .option-chip-list li:hover,
   .specialized-list li:hover {
     box-shadow: inset 0 0 0 1px #ff5a1f70, 0 12px 28px #0004;
   }
