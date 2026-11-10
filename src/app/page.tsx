@@ -1,16 +1,73 @@
 import Link from "next/link";
-import {
-  getProductStatusLabel,
-  products,
-} from "@/modules/products/catalog";
+import { products, type ProductIcon } from "@/modules/products/catalog";
 
-const planningAreas = [
-  "Clientes",
-  "Productos",
-  "Licencias",
-  "Activaciones",
-  "Versiones",
-  "Instaladores",
+function ProductMark({ icon }: { icon: ProductIcon }) {
+  if (icon === "nutrition") {
+    return (
+      <span className="product-mark product-mark--nutri" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+      </span>
+    );
+  }
+
+  if (icon === "calendar") {
+    return (
+      <span className="product-mark product-mark--agenda" aria-hidden="true">
+        <span>15</span>
+        <i />
+        <i />
+        <i />
+        <i />
+        <i />
+        <i />
+      </span>
+    );
+  }
+
+  const illustrations = {
+    clubs: (
+      <>
+        <path d="M37 8 54 14v15c0 12-7 21-17 27-10-6-17-15-17-27V14L37 8Z" />
+        <path d="m37 19 2.5 5 5.5.8-4 3.8 1 5.5-5-2.6-5 2.6 1-5.5-4-3.8 5.5-.8 2.5-5Z" className="product-mark__accent" />
+        <circle cx="51" cy="46" r="7" />
+        <path d="m48 41 6 10m1-11-8 12" />
+      </>
+    ),
+    automotive: (
+      <>
+        <path d="m15 39 4-13c1-3 3-5 6-5h23c3 0 5 2 6 5l4 13v9H15v-9Z" />
+        <path d="m21 37 3-10h25l4 10H21Z" className="product-mark__accent" />
+        <path d="M15 39h43M23 48v5m32-5v5" />
+        <circle cx="24" cy="43" r="2" />
+        <circle cx="50" cy="43" r="2" />
+      </>
+    ),
+    billing: (
+      <>
+        <path d="M22 10h22l10 10v34H22V10Z" />
+        <path d="M44 10v11h10" />
+        <path d="M29 29h18m-18 8h18m-18 8h10" />
+        <path d="M29 22h8" className="product-mark__accent" />
+      </>
+    ),
+  } as const;
+
+  return (
+    <span className={`product-mark product-mark--${icon}`} aria-hidden="true">
+      <svg viewBox="0 0 72 72" focusable="false">
+        {illustrations[icon]}
+      </svg>
+    </span>
+  );
+}
+
+const processSteps = [
+  { number: "01", title: "Entender", text: "Partimos de necesidades concretas." },
+  { number: "02", title: "Diseñar", text: "Cuidamos la solución y cada interacción." },
+  { number: "03", title: "Desarrollar", text: "Convertimos ideas claras en herramientas digitales." },
+  { number: "04", title: "Evolucionar", text: "Construimos productos que pueden crecer con el tiempo." },
 ];
 
 export default function Home() {
@@ -18,80 +75,126 @@ export default function Home() {
     <>
       <header className="site-header">
         <a className="brand" href="#inicio" aria-label="Barre Digital, inicio">
-          <span className="brand-mark">b.</span>
+          <span className="brand-mark" aria-hidden="true">b.</span>
           <span>barre<span className="brand-light">digital</span></span>
         </a>
-        <nav aria-label="Navegación principal">
-          <a href="#aplicaciones">Aplicaciones</a>
-          <a href="#plataforma">Plataforma</a>
-          <a className="nav-cta" href="#enfoque">Qué hacemos <span aria-hidden="true">↗</span></a>
+
+        <nav className="desktop-nav" aria-label="Navegación principal">
+          <a href="#productos">Productos</a>
+          <a href="#servicios">Servicios</a>
+          <a className="nav-cta" href="#contacto">Contacto <span aria-hidden="true">↗</span></a>
         </nav>
+
+        <details className="mobile-menu">
+          <summary aria-label="Abrir menú de navegación">
+            <span>Menú</span><span className="menu-symbol" aria-hidden="true">+</span>
+          </summary>
+          <nav aria-label="Navegación móvil">
+            <a href="#productos">Productos</a>
+            <a href="#servicios">Servicios</a>
+            <a href="#contacto">Contacto <span aria-hidden="true">↗</span></a>
+          </nav>
+        </details>
       </header>
 
       <main>
-      <section className="hero section-wrap" id="inicio">
-        <div className="hero-copy">
-          <p className="eyebrow"><span className="eyebrow-dot" /> Tecnología con propósito</p>
-          <h1>Ideas claras.<br /><span>Soluciones digitales.</span></h1>
-          <p className="hero-text">Diseñamos y desarrollamos herramientas digitales que ayudan a resolver necesidades concretas, con foco en la experiencia y el uso cotidiano.</p>
-          <a className="text-link" href="#aplicaciones">Conocé nuestras aplicaciones <span aria-hidden="true">↓</span></a>
-        </div>
-        <div className="hero-art" aria-label="Composición abstracta con formas geométricas" role="img">
-          <div className="art-orbit orbit-one" /><div className="art-orbit orbit-two" />
-          <div className="art-disc"><span className="disc-cut" /><span className="disc-dot" /></div>
-          <div className="art-label label-top">IDEA <span>→</span> PRODUCTO</div>
-          <div className="art-label label-bottom">HECHO PARA EL DÍA A DÍA <span>✳</span></div>
-          <span className="art-index">01 / 03</span>
-        </div>
-        <div className="hero-foot"><span>Desarrollo independiente</span><span>Buenos Aires · Argentina</span><span className="scroll-cue">DESLIZÁ <span>↓</span></span></div>
-      </section>
-
-      <section className="intro section-wrap" id="enfoque">
-        <p className="eyebrow">01 — Nuestro enfoque</p>
-        <div className="intro-content"><h2>Lo digital funciona mejor cuando <em>hace simple</em> lo importante.</h2><p>Barre Digital crea soluciones de software con una mirada práctica: entender el problema, cuidar cada interacción y construir productos que puedan evolucionar con el tiempo.</p></div>
-      </section>
-
-      <section className="apps section-wrap" id="aplicaciones">
-        <div className="section-heading"><div><p className="eyebrow">02 — Aplicaciones</p><h2>Productos en camino.</h2></div><p>Un conjunto de herramientas pensadas para acompañar tareas reales.</p></div>
-        {products.map((product, index) => (
-          <article className="app-card" key={product.id}>
-            <div className="app-number">A / {String(index + 1).padStart(2, "0")}</div>
-            <div
-              className={product.icon === "nutrition" ? "nutri-icon" : "agenda-icon"}
-              aria-hidden="true"
-            >
-              {product.icon === "nutrition" ? (
-                <><span /><span /><span /></>
-              ) : (
-                <><span>15</span><i /><i /><i /><i /><i /><i /><i /></>
-              )}
+        <section className="hero section-wrap" id="inicio" aria-labelledby="hero-title">
+          <div className="hero-copy">
+            <p className="eyebrow"><span className="eyebrow-dot" /> Tecnología con propósito</p>
+            <h1 id="hero-title"><span className="title-line title-line--primary">Diseñamos,</span><span className="title-line title-line--secondary">desarrollamos y</span><span className="title-line title-line--primary">evolucionamos</span><span className="title-line title-line--secondary">soluciones digitales.</span></h1>
+            <p className="hero-text">Creamos software con una mirada práctica: entender el problema, cuidar cada interacción y hacer simple lo importante.</p>
+            <div className="hero-actions">
+              <a className="button button-primary" href="#productos">Explorar productos <span aria-hidden="true">↓</span></a>
+              <a className="button button-quiet" href="#servicios">Qué hacemos <span aria-hidden="true">↗</span></a>
             </div>
-            <div className="app-description">
-              <p className={`status ${product.status === "planned" ? "status-planned" : "status-current"}`}>
-                <span /> {getProductStatusLabel(product.status)}
-              </p>
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-              {product.hasDetailPage && (
-                <Link className="product-detail-link" href={`/productos/${product.id}`}>
-                  Ver detalle de {product.name}
-                  <span aria-hidden="true">↗</span>
-                </Link>
-              )}
+          </div>
+
+          <div className="hero-art" aria-hidden="true">
+            <div className="art-grid" />
+            <div className="art-ring art-ring--outer" />
+            <div className="art-ring art-ring--inner" />
+            <div className="art-core"><span>b.</span><i /></div>
+            <span className="art-tag art-tag--top">IDEA <b>↗</b> SOLUCIÓN</span>
+            <span className="art-tag art-tag--bottom">BARRE DIGITAL <b>—</b> 01</span>
+            <span className="art-cross art-cross--one">+</span>
+            <span className="art-cross art-cross--two">+</span>
+          </div>
+
+          <div className="hero-foot"><span>Desarrollo independiente</span><span>Buenos Aires · Argentina</span><a href="#productos">Deslizá <span aria-hidden="true">↓</span></a></div>
+        </section>
+
+        <section className="products section-wrap" id="productos" aria-labelledby="products-title">
+          <div className="section-heading">
+            <div><p className="eyebrow"><span>01</span> / Productos</p><h2 id="products-title"><span className="title-line title-line--primary">Ideas que toman</span><span className="title-line title-line--secondary"><em>forma propia.</em></span></h2></div>
+            <p>Herramientas digitales pensadas para acompañar tareas reales y necesidades cotidianas.</p>
+          </div>
+
+          <div className="product-list">
+            {products.map((product, index) => (
+              <article className={`product-entry product-entry--${product.id}`} key={product.id}>
+                <div className="product-meta"><span>0{index + 1}</span><span>Producto digital</span></div>
+                <ProductMark icon={product.icon} />
+                <div className="product-copy">
+                  <h3>{product.name}</h3>
+                  <p className="product-description">{product.description}</p>
+                  {product.detailPath ? (
+                    <Link className="inline-link inline-link--button" href={product.detailPath}>
+                      {product.id === "nutri" ? `Conocer ${product.name}` : "Conocer más"} <span aria-hidden="true">↗</span>
+                    </Link>
+                  ) : (
+                    null
+                  )}
+                </div>
+                {product.detailPath ? <span className="product-arrow" aria-hidden="true">↗</span> : null}
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="services" id="servicios" aria-labelledby="services-title">
+          <div className="services-inner section-wrap">
+            <div className="services-heading">
+              <p className="eyebrow"><span>02</span> / Qué hacemos</p>
+              <h2 id="services-title"><span className="title-line title-line--primary services-title-primary">Tecnología útil.</span><span className="title-line title-line--secondary"><em className="editorial-italic">Diseñada con intención.</em></span></h2>
+              <p>Barre Digital crea soluciones de software desde una mirada práctica: comprender el problema, diseñar con cuidado y construir productos que puedan evolucionar.</p>
             </div>
-          </article>
-        ))}
-        <p className="section-note"><span aria-hidden="true">✳</span> Cada producto evoluciona a su propio ritmo. La disponibilidad puede variar.</p>
-      </section>
+            <ol className="process-list">
+              {processSteps.map((step) => (
+                <li key={step.number}>
+                  <span className="process-number">{step.number}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.text}</p>
+                  <span className="process-mark" aria-hidden="true">↗</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
 
-      <section className="platform section-wrap" id="plataforma">
-        <div className="platform-copy"><p className="eyebrow">03 — Próximos pasos</p><h2>Una base para<br /><em>crecer con orden.</em></h2><p>También está en planificación una plataforma de administración para acompañar el ciclo de vida de los productos digitales.</p><div className="planning-badge"><span /> ÁREA EN PLANIFICACIÓN</div></div>
-        <div className="platform-panel"><div className="panel-top"><span>BARRE / ADMINISTRACIÓN</span><span>VISIÓN INICIAL</span></div><h3 className="panel-title">Áreas contempladas</h3><ul>{planningAreas.map((area, index) => <li key={area}><span className="area-index">0{index + 1}</span>{area}<span className="area-state">POR DEFINIR</span></li>)}</ul><div className="panel-foot"><span>Alcance sujeto a definición</span><span>↗</span></div></div>
-        <p className="platform-disclaimer">Estas áreas representan una planificación inicial. No son funciones disponibles ni implementadas.</p>
-      </section>
-
+        <section className="contact section-wrap" id="contacto" aria-labelledby="contact-title">
+          <div className="contact-index"><span>03 / Cierre</span><span className="contact-cross" aria-hidden="true">✳</span></div>
+          <p className="eyebrow">Barre Digital</p>
+          <h2 id="contact-title"><span className="title-line title-line--primary">Las buenas soluciones</span><span className="title-line title-line--secondary">empiezan por <em>entender.</em></span></h2>
+          <p className="contact-copy">Diseñamos, desarrollamos y evolucionamos soluciones digitales para necesidades concretas.</p>
+          <span className="contact-rule" aria-hidden="true" />
+          <span className="contact-signature">Soluciones digitales, con intención.</span>
+        </section>
       </main>
-      <footer className="site-footer section-wrap"><a className="brand" href="#inicio"><span className="brand-mark">b.</span><span>barre<span className="brand-light">digital</span></span></a><p>Software pensado con intención.</p><span className="footer-end">© Barre Digital</span></footer>
+
+      <footer className="site-footer">
+        <div className="footer-inner section-wrap">
+          <a className="brand" href="#inicio" aria-label="Barre Digital, volver al inicio">
+            <span className="brand-mark" aria-hidden="true">b.</span>
+            <span>barre<span className="brand-light">digital</span></span>
+          </a>
+          <nav aria-label="Navegación secundaria">
+            <a href="#productos">Productos</a>
+            <a href="#servicios">Qué hacemos</a>
+            <a href="#contacto">Contacto</a>
+          </nav>
+          <p>© Barre Digital</p>
+        </div>
+      </footer>
     </>
   );
 }
